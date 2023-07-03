@@ -5,7 +5,10 @@ name: Node.js CI -DEV
 
 on:
   push:
-    branches-ignore: [] # Ejecutar en todas las ramas
+    # Ejecutar en todas las ramas
+    branches-ignore:
+      - develop
+      - main
 jobs:
   build:
 
