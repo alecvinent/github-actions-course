@@ -1,6 +1,12 @@
 name: manual trigger with params
 
 on:
+  push:
+    # Ejecutar en todas las ramas
+    branches-ignore:
+      - develop
+      - main
+
   workflow_dispatch:
     inputs:
       flutter_version:
