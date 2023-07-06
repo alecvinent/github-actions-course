@@ -1,63 +1,37 @@
 name: manual trigger with params
 
 on:
-  push:
-    # Ejecutar en todas las ramas
-    branches-ignore:
-      - develop
-      - main
-
   workflow_dispatch:
     inputs:
-      username:
-        description: "give me your username"
-        default: ""
-        type: string
-      flutter_version:
-        description: 'Framework version'
+      repository_name:
+        description: 'Repository name. Ex. wpc-docker-dev'
+        default: ''
         required: true
-        default: '2.5.3'
-      publish_artifacts:
-        description: 'Publish artifacts'
+      repository_path:
+        description: 'Path. Ex. wpc/deib-data-sync-*'
+        default: ''
         required: true
-        default: 'true'
+      exclude_filters:
+        description: 'Filters to exclude separated by comma. Ex. latest,*-*,_uploads'
+        default: '*'
+        required: true
+      filter_time:
+        description: 'Filter modification'
+        default: "2023-09-27T20:00:00.000Z"
+        required: true
+      filter_type:
+        description: 'Type'
+        default: 'folder'
 
 jobs:
-
-  job1:
+  jfrog-cli-clean-images:
     runs-on: ubuntu-latest
 
     steps:
-      - name: print username provided
+      - name: print input provided
         run: |
-          echo The username is ${{ inputs.username }}
-        
-        
-
-        #  build_web:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout the code
-#        uses: actions/checkout@v3
-#
-#      - name: Set Flutter version
-#        uses: subosito/flutter-action@v2.2.0
-#        with:
-#          flutter-version: '${{ github.event.inputs.flutter_version }}'
-#
-#      - name: Display Flutter version
-#        run: flutter --version
-#
-#      - name: Get packages
-#        run: flutter pub get
-#
-#      - name: Build Flutter Web
-#        run: flutter build web --release
-#
-#      - if: github.event.inputs.publish_artifacts == 'true'
-#        name: Publish Artifacts
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: artifacts
-#          path: build/web
+          echo The repository_name is ${{ inputs.repository_name }}
+          echo The repository_path is ${{ inputs.repository_path }}
+          echo The exclude_filters is ${{ inputs.exclude_filters }}
+          echo The filter_time is ${{ inputs.filter_time }}
+          echo The filter_type is ${{ inputs.filter_type }}
