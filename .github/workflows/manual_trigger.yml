@@ -9,6 +9,10 @@ on:
 
   workflow_dispatch:
     inputs:
+      username:
+        description: "give me your username"
+        default: ""
+        type: string
       flutter_version:
         description: 'Framework version'
         required: true
@@ -19,30 +23,41 @@ on:
         default: 'true'
 
 jobs:
-  build_web:
+
+  job1:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the code
-        uses: actions/checkout@v2
+      - name: print username provided
+        run: |
+          echo The username is ${{ inputs.username }}
+        
+        
 
-      - name: Set Flutter version
-        uses: subosito/flutter-action@v2.2.0
-        with:
-          flutter-version: '${{ github.event.inputs.flutter_version }}'
-
-      - name: Display Flutter version
-        run: flutter --version
-
-      - name: Get packages
-        run: flutter pub get
-
-      - name: Build Flutter Web
-        run: flutter build web --release
-
-      - if: github.event.inputs.publish_artifacts == 'true'
-        name: Publish Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: artifacts
-          path: build/web
+        #  build_web:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout the code
+#        uses: actions/checkout@v3
+#
+#      - name: Set Flutter version
+#        uses: subosito/flutter-action@v2.2.0
+#        with:
+#          flutter-version: '${{ github.event.inputs.flutter_version }}'
+#
+#      - name: Display Flutter version
+#        run: flutter --version
+#
+#      - name: Get packages
+#        run: flutter pub get
+#
+#      - name: Build Flutter Web
+#        run: flutter build web --release
+#
+#      - if: github.event.inputs.publish_artifacts == 'true'
+#        name: Publish Artifacts
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: artifacts
+#          path: build/web
