@@ -1,3 +1,5 @@
+name: manual trigger with params
+
 on:
   workflow_dispatch:
     inputs:
