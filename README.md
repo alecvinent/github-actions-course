@@ -5,6 +5,8 @@ https://github-actions-hero.vercel.app
 
 https://dev.to/ritikasingh02/github-actions-zero-to-hero-45of
 
+https://damienaicheh.github.io/github/actions/2022/01/20/set-dynamic-parameters-github-workflows-en.html
+
 ---------------------------
 # Getting Started with Create React App
 
