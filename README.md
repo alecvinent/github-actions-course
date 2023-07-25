@@ -1,3 +1,11 @@
+
+PluralSight course: Getting started with GitHub Actions
+
+https://github-actions-hero.vercel.app
+
+https://dev.to/ritikasingh02/github-actions-zero-to-hero-45of
+
+---------------------------
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
