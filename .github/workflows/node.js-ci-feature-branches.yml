@@ -6,9 +6,12 @@ name: Node.js CI  - feature branches
 on:
   push:
     # Ejecutar en todas las ramas
-    branches-ignore:
-      - develop
-      - main
+    branches: []
+
+  pull_request:
+    # Ejecutar en todas las ramas
+    branches: []
+
 jobs:
   build:
     runs-on: ubuntu-latest
