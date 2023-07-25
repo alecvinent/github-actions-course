@@ -7,9 +7,6 @@ on:
   push:
     # Ejecutar en todas las ramas
     branches: []
-    branches-ignore:
-      - main
-      - develop
 
   pull_request:
     # Ejecutar en todas las ramas
