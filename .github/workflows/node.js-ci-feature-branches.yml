@@ -6,7 +6,9 @@ name: Node.js CI  - feature branches
 on:
   pull_request:
     # Ejecutar en todas las ramas
-    branches: []
+    branches-ignore:
+      - develop
+      - main
 
 jobs:
   build:
