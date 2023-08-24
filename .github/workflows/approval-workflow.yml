@@ -1,10 +1,6 @@
 name: Team Approval CI
 on:
-  pull_request_review:
-    branches:
-      - develop
-      - main
-  workflow_dispatch: [ ]
+  pull_request_review
 
 concurrency:
   group: ci-${{ github.ref }}
