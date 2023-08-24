@@ -1,0 +1,22 @@
+name: Team Approval CI
+on:
+  pull_request_review:
+    branches:
+      - develop
+      - main
+  workflow_dispatch: [ ]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on:
+      - self-hosted
+
+    steps:
+      - name: Fetch code
+        run: |-
+          echo "Fetching code"
+      - uses: actions/checkout@v3
