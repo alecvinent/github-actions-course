@@ -1,6 +1,10 @@
 name: Team Approval CI
 on:
-  pull_request_review
+  pull_request_review:
+    types:
+      - submitted
+      - edited
+      - dismissed
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -8,38 +12,8 @@ concurrency:
 
 jobs:
   label-when-approved:
-    runs-on:
-      - self-hosted
-      - ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Using Label approved pull requests
-        uses: abinoda/label-when-approved-action@1.0.5
-        env:
-          APPROVALS: "2"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ADD_LABEL: "approved"
-          REMOVE_LABEL: "awaiting%20review"
-
-      - name: Using Tiangolo's Label Approved
-        uses: tiangolo/label-approved@0.0.2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          config: >
-            {
-              "approved-1":
-                {
-                  "number": 1,
-                  "await_label": "awaiting review"
-                },
-              "omg 2 approved":
-                {
-                  "number": 2,
-                  "await_label": "only 2"
-                },
-              "approvals in 3D":
-                {
-                  "number": 3
-                }
-            }
-
+      - name: label-approved-action
+        uses: AnandChowdhary/label-approved-action@v1.0.0
