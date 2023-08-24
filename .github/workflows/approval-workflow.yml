@@ -11,12 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  label-when-approved:
     runs-on:
       - self-hosted
-
-    steps:
-      - name: Fetch code
-        run: |-
-          echo "Fetching code"
-      - uses: actions/checkout@v3
+      - ubuntu-latest
