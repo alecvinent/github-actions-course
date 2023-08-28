@@ -28,7 +28,7 @@ jobs:
           ADD_LABEL: "approved"
           REMOVE_LABEL: "awaiting%20review"
 
-      - if: github.base_ref == "develop"
-        name: runs if is the develop branch
+      - if: github.base_ref != 'develop'
+        name: runs if is not the develop branch
         run: |
           echo Hello from ${{ github.base_ref }}
