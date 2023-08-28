@@ -26,6 +26,7 @@ jobs:
             const labelName = 'approved';
             const labels = context.payload.pull_request.labels.map(label => label.name);
             const isApproved = labels.includes(labelName);
+            console.log(`labels: ` + labels)
             console.log(`Is label '${labelName}' approved? ${isApproved}`);
             core.setOutput('approved', isApproved);
 
