@@ -20,10 +20,6 @@ jobs:
       - name: Check if label is approved
         id: check_label
         run: echo "Checking if label is approved"
-        uses: actions/github-script@v6
-        with:
-          script: |
-            console.log(steps.set-result.outputs.result)
 
       - name: Print approval message
         if: ${{ steps.check_label.outputs.return_code == 0 }}
