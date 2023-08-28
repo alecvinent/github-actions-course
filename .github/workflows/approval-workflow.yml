@@ -19,13 +19,13 @@ jobs:
     steps:
       - name: Check if label is approved
         id: check_label
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const labelName = 'approved';
             const labels = context.payload.pull_request.labels.map(label => label.name);
-            console.log(context.payload.pull_request.labels)
+            console.log(context.payload.pull_request)
             const isApproved = labels.includes(labelName);
             console.log(`Is label '${labelName}' approved? ${isApproved}`);
             core.setOutput('approved', isApproved);
