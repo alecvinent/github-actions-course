@@ -21,9 +21,9 @@ jobs:
         id: check_label
         run: echo "Checking if label is approved"
 
-      - name: Print approval message
-        if: ${{ steps.check_label.outputs.return_code == 0 }}
-        run: echo "Label is approved! Performing approved action."
+#      - name: Print approval message
+#        if: ${{ steps.check_label.outputs.return_code == 0 }}
+#        run: echo "Label is approved! Performing approved action."
 
       - name: Check if label is approved
         id: check_label
@@ -31,11 +31,11 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            console.log(context.payload)
+            console.log(steps.check_label.outputs)
             
             const labelName = 'approved';
-            const labels = context.payload.pull_request.labels.map(label => label.name);
-            const isApproved = labels.includes(labelName);
+#            const labels = context.payload.pull_request.labels.map(label => label.name);
+            const isApproved = steps.check_label.outputs.return_code == 0;
             console.log(`Is label '${labelName}' approved? ${isApproved}`);
             core.setOutput('approved', isApproved);
 
