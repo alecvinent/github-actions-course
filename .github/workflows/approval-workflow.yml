@@ -27,3 +27,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ADD_LABEL: "approved"
           REMOVE_LABEL: "awaiting%20review"
+
+      - if: github.base_ref != "develop"
+        name: runs if isn't not develop branch
+        run: |
+          echo Hello from ${{ github.base_ref }}
