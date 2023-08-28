@@ -35,7 +35,7 @@ jobs:
       - name: Set approval message
         id: set_approval
         run:
-          echo "Approval status: ${{ steps.check_label.outputs.approved }}"
+          echo "${{ steps.check_label.outputs.approved }}"
         env:
           APPROVED: ${{ steps.check_label.outputs.approved }}
 
