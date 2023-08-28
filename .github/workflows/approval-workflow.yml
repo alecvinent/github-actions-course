@@ -20,7 +20,9 @@ jobs:
     steps:
       - name: Check if label is approved
         id: check_label
-        run: echo "Checking if label is approved"
+        run: |
+          echo "Checking if label is approved"
+          echo ${{ steps.check_label.outputs.return_code }}
 
       - name: Print approval message
         if: ${{ steps.check_label.outputs.return_code == 0 }}
