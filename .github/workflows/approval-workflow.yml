@@ -20,15 +20,15 @@ jobs:
     permissions:
       contents: read
     steps:
-      - name: Label when approved
-        uses: pullreminders/label-when-approved-action@master
+      - name: label-approved-action
+        uses: AnandChowdhary/label-approved-action@v1.0.0
         env:
           APPROVALS: "1"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ADD_LABEL: "approved"
           REMOVE_LABEL: "awaiting%20review"
 
-      - if: github.base_ref != "develop"
-        name: runs if isn't not develop branch
+      - if: github.base_ref != 'develop'
+        name: runs if is not the develop branch
         run: |
           echo Hello from ${{ github.base_ref }}
