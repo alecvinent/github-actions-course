@@ -27,6 +27,14 @@ jobs:
       - name: Print approval message
         if: ${{ steps.check_label.outputs.return_code == 0 }}
         run: echo "Label is approved! Performing approved action."
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const isApproved = steps.check_label.outputs.return_code == 0;
+            console.log(steps.check_label.outputs)
+            core.setOutput('approved', isApproved);
+
 
 
 #  create_approved_label:
