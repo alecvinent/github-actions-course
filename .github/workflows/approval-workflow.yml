@@ -14,6 +14,38 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  create_approved_label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if label is approved
+        id: check_label
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const labelName = 'approved';
+            const labels = context.payload.pull_request.labels.map(label => label.name);
+            const isApproved = labels.includes(labelName);
+            console.log(`Is label '${labelName}' approved? ${isApproved}`);
+            core.setOutput('approved', isApproved);
+
+      - name: Create label
+        if: steps.check_label.outputs.approved == 'true'
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const labelName = 'approved';
+            const labelColor = '009800'; // Green color
+            const owner = context.payload.repository.owner.login;
+            const repo = context.payload.repository.name;
+            await github.issues.createLabel({
+              owner: owner,
+              repo: repo,
+              name: labelName,
+              color: labelColor
+            });
+
   label-when-approved:
     name: Label when approved
     runs-on: ubuntu-latest
