@@ -6,6 +6,9 @@ on:
       - edited
       - dismissed
 
+  # allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -14,6 +17,8 @@ jobs:
   label-when-approved:
     name: Label when approved
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Label when approved
         uses: pullreminders/label-when-approved-action@master
