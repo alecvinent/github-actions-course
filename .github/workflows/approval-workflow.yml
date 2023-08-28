@@ -23,10 +23,9 @@ jobs:
         run: |
           echo "Checking if label is approved"
           echo ${{ steps.check_label.outputs.return_code }}
+          echo "Label is approved! Performing approved action."
 
-      - name: Print approval message
-        if: ${{ steps.check_label.outputs.return_code == 0 }}
-        run: echo "Label is approved! Performing approved action."
+      - name: Set approval message
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
