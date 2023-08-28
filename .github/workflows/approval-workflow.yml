@@ -22,17 +22,30 @@ jobs:
         id: check_label
         run: |
           echo "Checking if label is approved"
-          echo ${{ steps.check_label.outputs.return_code }}
-          echo "Label is approved! Performing approved action."
+          if [ "$LABEL" == "approved" ]; then
+            echo "Label is approved"
+            exit 0
+          else
+            echo "Label is not approved"
+            exit 1
+          fi
+        env:
+          LABEL: ${{ github.event.label.name }}
 
       - name: Set approval message
+        id: set_approval
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const isApproved = steps.check_label.outputs.return_code == 0;
-            console.log(steps.check_label.outputs)
-            core.setOutput('approved', isApproved);
+            const isApproved = steps.check_label.conclusion === 'success';
+            console.log(isApproved ? 'Label is approved! Performing approved action.' : 'Label is not approved.');
+            return { approved: isApproved };
+
+      - name: Perform Approved Action
+        if: steps.set_approval.outputs.approved == 'true'
+        run: |
+          echo "Performing approved action"
 
 
 
