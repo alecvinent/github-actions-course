@@ -34,13 +34,10 @@ jobs:
 
       - name: Set approval message
         id: set_approval
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const isApproved = steps.check_label.conclusion === 'success';
-            console.log(isApproved ? 'Label is approved! Performing approved action.' : 'Label is not approved.');
-            return { approved: isApproved };
+        run:
+          echo "Approval status: ${{ steps.check_label.outputs.approved }}"
+        env:
+          APPROVED: ${{ steps.check_label.outputs.approved }}
 
       - name: Perform Approved Action
         if: steps.set_approval.outputs.approved == 'true'
