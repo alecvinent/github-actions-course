@@ -28,11 +28,11 @@ jobs:
       - name: Check if label is approved
         id: check_label
         uses: actions/github-script@v6
+        run: |
+          echo "${{ steps.check_label.outputs }}"
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            console.log(steps.check_label.outputs)
-            
             const labelName = 'approved';
 #            const labels = context.payload.pull_request.labels.map(label => label.name);
             const isApproved = steps.check_label.outputs.return_code == 0;
