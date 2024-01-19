@@ -1,3 +1,19 @@
+
+PluralSight course: Getting started with GitHub Actions
+
+https://github-actions-hero.vercel.app
+
+https://dev.to/ritikasingh02/github-actions-zero-to-hero-45of
+
+https://damienaicheh.github.io/github/actions/2022/01/20/set-dynamic-parameters-github-workflows-en.html
+
+---------------------------
+GitHub Actions: GITHUB_TOKEN Explained | How it works, Change Permissions, Customizations
+
+https://www.youtube.com/watch?v=jEK07KPEjnY&ab_channel=CoderDave 
+
+
+---------------------------
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

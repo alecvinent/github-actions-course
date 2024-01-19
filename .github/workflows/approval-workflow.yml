@@ -1,0 +1,106 @@
+name: Team Approval CI
+on:
+  pull_request_review:
+    types:
+      - submitted
+      - edited
+      - dismissed
+
+  # allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  label_approved_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if label is approved
+        id: check_label
+        run: |
+          echo "Checking if label is approved"
+          if [ "$LABEL" == "approved" ]; then
+            echo "Label is approved"
+            exit 0
+          else
+            echo "Label is not approved"
+            exit 0
+          fi
+        env:
+          LABEL: ${{ github.event.label.name }}
+
+      - name: Set approval message
+        id: set_approval
+        run:
+          echo "${{ steps.check_label.outputs.approved }}"
+        env:
+          APPROVED: ${{ steps.check_label.outputs.approved }}
+
+      - name: Perform Approved Action
+        if: steps.set_approval.outputs.approved == 'true'
+        run: |
+          echo "Performing approved action"
+
+
+
+#  create_approved_label:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Check if label is approved
+#        id: check_label
+#        run: echo "Checking if label is approved"
+#
+##      - name: Print approval message
+##        if: ${{ steps.check_label.outputs.return_code == 0 }}
+##        run: echo "Label is approved! Performing approved action."
+#
+#      - name: Check if label is approved
+#        id: check_label
+#        uses: actions/github-script@v6
+#        with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          script: |
+#            const labelName = 'approved';
+##            const labels = context.payload.pull_request.labels.map(label => label.name);
+#            const isApproved = steps.check_label.outputs.return_code == 0;
+#            console.log(`Is label '${labelName}' approved? ${isApproved}`);
+#            core.setOutput('approved', isApproved);
+#
+#      - name: Create label
+#        if: steps.check_label.outputs.approved == 'true'
+#        uses: actions/github-script@v4
+#        with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          script: |
+#            const labelName = 'approved';
+#            const labelColor = '009800'; // Green color
+#            const owner = context.payload.repository.owner.login;
+#            const repo = context.payload.repository.name;
+#            await github.issues.createLabel({
+#              owner: owner,
+#              repo: repo,
+#              name: labelName,
+#              color: labelColor
+#            });
+#
+#  label-when-approved:
+#    name: Label when approved
+#    runs-on: ubuntu-latest
+#    permissions:
+#      contents: read
+#    steps:
+#      - name: label-approved-action
+#        uses: AnandChowdhary/label-approved-action@v1.0.0
+#        env:
+#          APPROVALS: "1"
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          ADD_LABEL: "approved"
+#          REMOVE_LABEL: "awaiting%20review"
+#
+#      - if: github.base_ref != 'develop'
+#        name: runs if is not the develop branch
+#        run: |
+#          echo Hello from ${{ github.base_ref }}
